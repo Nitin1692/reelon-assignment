@@ -48,16 +48,19 @@ class _LoginScreenState extends State<LoginScreen> {
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 440),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
-                    width: 52,
-                    height: 52,
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.primary,
-                      borderRadius: BorderRadius.circular(14),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: 52,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary,
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: const Icon(Icons.calendar_month, color: Colors.white, size: 28),
                     ),
-                    child: const Icon(Icons.calendar_month, color: Colors.white, size: 28),
                   ),
                   const SizedBox(height: 32),
                   Text('Welcome back', style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold)),
@@ -67,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Form(
                     key: _formKey,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         TextFormField(
                           controller: _emailCtrl,
@@ -95,30 +99,44 @@ class _LoginScreenState extends State<LoginScreen> {
                           onFieldSubmitted: (_) => _login(),
                         ),
                         const SizedBox(height: 24),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 52,
-                          child: FilledButton(
-                            onPressed: loading ? null : _login,
-                            child: loading
-                                ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                                : const Text('Sign In', style: TextStyle(fontSize: 16)),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 52,
-                          child: OutlinedButton(
-                            onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => const SignupScreen()),
-                            ),
-                            child: const Text('Create New Account', style: TextStyle(fontSize: 16)),
-                          ),
+                        FilledButton(
+                          style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(52)),
+                          onPressed: loading ? null : _login,
+                          child: loading
+                              ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                              : const Text('Sign In', style: TextStyle(fontSize: 16)),
                         ),
                       ],
                     ),
+                  ),
+                  const SizedBox(height: 12),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(52)),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SignupScreen()),
+                    ),
+                    child: const Text('Create New Account', style: TextStyle(fontSize: 16)),
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Don't have an account? ", style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey.shade600)),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const SignupScreen()),
+                        ),
+                        child: Text(
+                          'Sign Up',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
