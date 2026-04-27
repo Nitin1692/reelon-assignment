@@ -90,4 +90,10 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Allow all hosts (Render sets HOST automatically)
+  config.hosts.clear
+
+  # Use SECRET_KEY_BASE env var
+  config.secret_key_base = ENV["SECRET_KEY_BASE"]
 end

@@ -35,3 +35,12 @@
 /config/master.key
 
 dump.rdb
+
+# Flutter
+flutter_app/build/
+flutter_app/.dart_tool/
+flutter_app/.flutter-plugins
+flutter_app/.flutter-plugins-dependencies
+
+# Flutter SDK (don't commit)
+/flutter_sdk/

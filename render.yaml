@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: schedulr-api
+    runtime: ruby
+    buildCommand: |
+      bundle config set --local without 'development test'
+      bundle install
+      bundle exec rails db:migrate
+    startCommand: bundle exec rails server -b 0.0.0.0 -p $PORT
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RUBY_VERSION
+        value: 3.4.1
+      - key: DATABASE_URL
+        sync: false
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: RAILS_LOG_TO_STDOUT
+        value: enabled
+      - key: RAILS_SERVE_STATIC_FILES
+        value: enabled
+    healthCheckPath: /api/v1/auth/me

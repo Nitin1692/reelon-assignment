@@ -1,0 +1,29 @@
+[debug] [2026-04-27T15:51:44.111Z] ----------------------------------------------------------------------
+[debug] [2026-04-27T15:51:44.113Z] Command:       /usr/bin/node /usr/local/bin/firebase login:ci --no-localhost
+[debug] [2026-04-27T15:51:44.113Z] CLI Version:   15.15.0
+[debug] [2026-04-27T15:51:44.114Z] Platform:      linux
+[debug] [2026-04-27T15:51:44.114Z] Node Version:  v20.19.2
+[debug] [2026-04-27T15:51:44.114Z] Time:          Mon Apr 27 2026 15:51:44 GMT+0000 (Coordinated Universal Time)
+[debug] [2026-04-27T15:51:44.114Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-04-27T15:51:44.116Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[warn] ⚠  Authenticating with a `login:ci` token is deprecated and will be removed in a future major version of `firebase-tools`. Instead, use a service account key with `GOOGLE_APPLICATION_CREDENTIALS`: https://cloud.google.com/docs/authentication/getting-started 
+[debug] [2026-04-27T15:51:44.149Z] >>> [apiv2][query] POST https://auth.firebase.tools/attest [none]
+[debug] [2026-04-27T15:51:44.150Z] >>> [apiv2][body] POST https://auth.firebase.tools/attest {"session_id":"1ab7f1ae-86d3-4df5-b699-8e5015ccf7f7"}
+[debug] [2026-04-27T15:51:44.691Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2026-04-27T15:51:44.691Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2026-04-27T15:51:44.846Z] <<< [apiv2][status] POST https://auth.firebase.tools/attest 200
+[debug] [2026-04-27T15:51:44.847Z] <<< [apiv2][body] POST https://auth.firebase.tools/attest {"token":"h6krierL66OUA1Sl6XWS5Slu0KuzgVlqUJMNTHiG81I"}
+[info] 
+[info] To sign in to the Firebase CLI:
+[info] 
+[info] 1. Take note of your session ID:
+[info] 
+[info]    1AB7F
+[info] 
+[info] 2. Visit the URL below on any device and follow the instructions to get your code:
+[info] 
+[info]    https://auth.firebase.tools/login?code_challenge=eSpHeSyCBH9Jq6meQpMINsxTvpKRBLEOcwbNFhfglHM&session=1ab7f1ae-86d3-4df5-b699-8e5015ccf7f7&attest=h6krierL66OUA1Sl6XWS5Slu0KuzgVlqUJMNTHiG81I
+[info] 
+[info] 3. Paste or enter the authorization code below once you have it:
+[info] 
