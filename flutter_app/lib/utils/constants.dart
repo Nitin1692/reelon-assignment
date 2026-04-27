@@ -3,7 +3,7 @@ class AppConstants {
   // Local dev: 'http://localhost:3000/api/v1'
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'https://schedulr-api.onrender.com/api/v1',
+    defaultValue: 'https://reelon-assignment.onrender.com/api/v1',
   );
 
   static const Map<String, String> entryTypeLabels = {
