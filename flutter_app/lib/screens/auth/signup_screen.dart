@@ -1,35 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
-import 'signup_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _nameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
+  final _confirmCtrl = TextEditingController();
   bool _obscure = true;
+  bool _obscureConfirm = true;
+  String _role = 'talent';
 
   @override
   void dispose() {
+    _nameCtrl.dispose();
     _emailCtrl.dispose();
     _passCtrl.dispose();
+    _confirmCtrl.dispose();
     super.dispose();
   }
 
-  Future<void> _login() async {
+  Future<void> _signup() async {
     if (!_formKey.currentState!.validate()) return;
     final auth = context.read<AuthProvider>();
-    final ok = await auth.login(_emailCtrl.text.trim(), _passCtrl.text);
+    final ok = await auth.register(
+      name: _nameCtrl.text.trim(),
+      email: _emailCtrl.text.trim(),
+      password: _passCtrl.text,
+      passwordConfirmation: _confirmCtrl.text,
+      role: _role,
+    );
     if (!ok && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(auth.error ?? 'Login failed'), backgroundColor: Colors.red),
+        SnackBar(content: Text(auth.error ?? 'Registration failed'), backgroundColor: Colors.red),
       );
     }
   }
@@ -60,14 +71,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Icon(Icons.calendar_month, color: Colors.white, size: 28),
                   ),
                   const SizedBox(height: 32),
-                  Text('Welcome back', style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold)),
+                  Text('Create account', style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  Text('Sign in to manage your schedule', style: theme.textTheme.bodyLarge?.copyWith(color: Colors.grey.shade600)),
+                  Text('Join Schedulr to manage your schedule', style: theme.textTheme.bodyLarge?.copyWith(color: Colors.grey.shade600)),
                   const SizedBox(height: 40),
                   Form(
                     key: _formKey,
                     child: Column(
                       children: [
+                        TextFormField(
+                          controller: _nameCtrl,
+                          textCapitalization: TextCapitalization.words,
+                          decoration: const InputDecoration(
+                            labelText: 'Full Name',
+                            prefixIcon: Icon(Icons.person_outline),
+                            border: OutlineInputBorder(),
+                          ),
+                          validator: (v) => v == null || v.trim().isEmpty ? 'Enter your name' : null,
+                        ),
+                        const SizedBox(height: 16),
                         TextFormField(
                           controller: _emailCtrl,
                           keyboardType: TextInputType.emailAddress,
@@ -77,6 +99,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             border: OutlineInputBorder(),
                           ),
                           validator: (v) => v == null || !v.contains('@') ? 'Enter a valid email' : null,
+                        ),
+                        const SizedBox(height: 16),
+                        DropdownButtonFormField<String>(
+                          value: _role,
+                          decoration: const InputDecoration(
+                            labelText: 'Role',
+                            prefixIcon: Icon(Icons.badge_outlined),
+                            border: OutlineInputBorder(),
+                          ),
+                          items: const [
+                            DropdownMenuItem(value: 'talent', child: Text('Talent / Professional')),
+                            DropdownMenuItem(value: 'manager', child: Text('Manager / Agent')),
+                          ],
+                          onChanged: (v) => setState(() => _role = v!),
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
@@ -91,32 +127,44 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () => setState(() => _obscure = !_obscure),
                             ),
                           ),
-                          validator: (v) => v == null || v.length < 6 ? 'Password too short' : null,
-                          onFieldSubmitted: (_) => _login(),
+                          validator: (v) => v == null || v.length < 6 ? 'Minimum 6 characters' : null,
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: _confirmCtrl,
+                          obscureText: _obscureConfirm,
+                          decoration: InputDecoration(
+                            labelText: 'Confirm Password',
+                            prefixIcon: const Icon(Icons.lock_outline),
+                            border: const OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              icon: Icon(_obscureConfirm ? Icons.visibility : Icons.visibility_off),
+                              onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm),
+                            ),
+                          ),
+                          validator: (v) => v != _passCtrl.text ? 'Passwords do not match' : null,
+                          onFieldSubmitted: (_) => _signup(),
                         ),
                         const SizedBox(height: 24),
                         SizedBox(
                           width: double.infinity,
                           height: 52,
                           child: FilledButton(
-                            onPressed: loading ? null : _login,
+                            onPressed: loading ? null : _signup,
                             child: loading
                                 ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                                : const Text('Sign In', style: TextStyle(fontSize: 16)),
+                                : const Text('Create Account', style: TextStyle(fontSize: 16)),
                           ),
                         ),
                         const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Don't have an account? ", style: theme.textTheme.bodyMedium),
+                            Text('Already have an account? ', style: theme.textTheme.bodyMedium),
                             GestureDetector(
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => const SignupScreen()),
-                              ),
+                              onTap: () => Navigator.pop(context),
                               child: Text(
-                                'Sign Up',
+                                'Sign In',
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: theme.colorScheme.primary,
                                   fontWeight: FontWeight.bold,
