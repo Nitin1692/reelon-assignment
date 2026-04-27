@@ -105,25 +105,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 : const Text('Sign In', style: TextStyle(fontSize: 16)),
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Don't have an account? ", style: theme.textTheme.bodyMedium),
-                            GestureDetector(
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) => const SignupScreen()),
-                              ),
-                              child: Text(
-                                'Sign Up',
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: theme.colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 52,
+                          child: OutlinedButton(
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => const SignupScreen()),
                             ),
-                          ],
+                            child: const Text('Create New Account', style: TextStyle(fontSize: 16)),
+                          ),
                         ),
                       ],
                     ),
