@@ -25,6 +25,7 @@ class User < ApplicationRecord
   validates :role, presence: true, inclusion: { in: ROLES }
 
   before_save { self.email = email.downcase }
+  before_create { self.active = true if active.nil? }
 
   def manager?
     role == "manager" || role == "admin"
