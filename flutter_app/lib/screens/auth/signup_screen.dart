@@ -17,7 +17,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _confirmCtrl = TextEditingController();
   bool _obscure = true;
   bool _obscureConfirm = true;
-  String _role = 'talent';
+  String _role = 'professional';
 
   @override
   void dispose() {
@@ -109,7 +109,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             border: OutlineInputBorder(),
                           ),
                           items: const [
-                            DropdownMenuItem(value: 'talent', child: Text('Talent / Professional')),
+                            DropdownMenuItem(value: 'professional', child: Text('Talent / Professional')),
                             DropdownMenuItem(value: 'manager', child: Text('Manager / Agent')),
                           ],
                           onChanged: (v) => setState(() => _role = v!),
